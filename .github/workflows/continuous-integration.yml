@@ -151,8 +151,12 @@ jobs:
 
       - name: "Run tests"
         if: "matrix.php-version != '7.3'"
-        run: "vendor/bin/simple-phpunit"
+        run: "vendor/bin/simple-phpunit --coverage-clover=coverage.xml"
 
       - name: "Run complete test suite on 7.3"
         if: "matrix.php-version == '7.3'"
-        run: "vendor/bin/simple-phpunit --configuration tests/complete.phpunit.xml"
+        run: "vendor/bin/simple-phpunit --configuration tests/complete.phpunit.xml --coverage-clover=coverage.xml"
+
+      - name: "Send coverage reports to Codecov"
+        run: "curl -s https://codecov.io/bash | bash"
+
